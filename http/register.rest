@@ -1,0 +1,7 @@
+POST https://reqres.in/api/register
+Content-Type: application/json
+
+{
+    "email": "eve.holt@reqres.in",
+    "password": "pistol"
+}
