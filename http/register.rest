@@ -1,5 +1,6 @@
 POST https://reqres.in/api/register
 Content-Type: application/json
+Authorization: Bearer xyz
 
 {
     "email": "eve.holt@reqres.in",
