@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Text.Json;
 using System.Text;
+using Spectre.Console;
 
 namespace RestClient {
     public class Processor {
@@ -17,16 +18,17 @@ namespace RestClient {
             var body = await result.Content.ReadAsStringAsync();
             var headers = result.Headers.GetEnumerator();
             var contentHeaders = result.Content.Headers.GetEnumerator();
-
             if (_options.ShowHeader) {
                 while (headers.MoveNext()) {
                     var current = headers.Current;
-                    Console.WriteLine($"{current.Key}: {string.Join(", ", current.Value)}");
+                    AnsiConsole.Markup($"[green]{current.Key}[/]: ");
+                    Console.WriteLine($"{String.Join(", ", current.Value)}");
                 }
 
                 while (contentHeaders.MoveNext()) {
                     var current = contentHeaders.Current;
-                    Console.WriteLine($"{current.Key}: {string.Join(", ", current.Value)}");
+                    AnsiConsole.Markup($"[green]{current.Key}[/]: ");
+                    Console.WriteLine($"{String.Join(", ", current.Value)}");
                 }
                 Console.WriteLine();
             }

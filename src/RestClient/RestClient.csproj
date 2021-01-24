@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Spectre.Console" Version="0.37.0" />
     <PackageReference Include="Sprache" Version="2.3.1" />
     <PackageReference Include="System.CommandLine.DragonFruit" Version="0.3.0-alpha.20574.7" />
     <PackageReference Include="System.Text.Json" Version="5.0.1" />
