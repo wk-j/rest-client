@@ -11,23 +11,29 @@ using System.Text;
 
 namespace RestClient {
 
-    class Program {
+    class Processor {
+        private readonly CommandOptions _options;
+        public Processor(CommandOptions options) {
+            _options = options;
+        }
 
-        static async Task PrintResponse(HttpResponseMessage result) {
+        async Task PrintResponse(HttpResponseMessage result) {
             var body = await result.Content.ReadAsStringAsync();
             var headers = result.Headers.GetEnumerator();
-            while (headers.MoveNext()) {
-                var current = headers.Current;
-                Console.WriteLine($"{current.Key}: {string.Join(", ", current.Value)}");
-            }
+            var contentHeaders = result.Content.Headers.GetEnumerator();
 
-            var c = result.Content.Headers.GetEnumerator();
-            while (c.MoveNext()) {
-                var current = c.Current;
-                Console.WriteLine($"{current.Key}: {string.Join(", ", current.Value)}");
-            }
+            if (_options.ShowHeader) {
+                while (headers.MoveNext()) {
+                    var current = headers.Current;
+                    Console.WriteLine($"{current.Key}: {string.Join(", ", current.Value)}");
+                }
 
-            Console.WriteLine();
+                while (contentHeaders.MoveNext()) {
+                    var current = contentHeaders.Current;
+                    Console.WriteLine($"{current.Key}: {string.Join(", ", current.Value)}");
+                }
+                Console.WriteLine();
+            }
 
             var ok = result.Content.Headers.TryGetValues("Content-Type", out var contentType);
             if (ok && contentType.Any(x => x.Contains("application/json"))) {
@@ -42,7 +48,7 @@ namespace RestClient {
 
         }
 
-        private static (bool, string) GetHeaderValue(Header[] headers, string key) {
+        (bool, string) GetHeaderValue(Header[] headers, string key) {
             var h = headers.FirstOrDefault(x => x.Key == key);
             if (h == null) {
                 return (true, "text/plain");
@@ -50,13 +56,13 @@ namespace RestClient {
             return (true, h.Value);
         }
 
-        private static async Task ProcessGet(HttpClient client, RequestInfo info) {
+        public async Task ProcessGet(HttpClient client, RequestInfo info) {
             var url = info.Url;
             var result = await client.GetAsync(url);
             await PrintResponse(result);
         }
 
-        private static async Task ProcessPost(HttpClient client, RequestInfo info) {
+        public async Task ProcessPost(HttpClient client, RequestInfo info) {
             var url = info.Url;
             var headers = info.Headers;
             var body = info.Body;
@@ -66,16 +72,29 @@ namespace RestClient {
             await PrintResponse(response);
         }
 
-        static async Task Main(string[] args) {
-            // var r = File.ReadAllText("http/register.rest");
-            var r = File.ReadAllText("http/register.rest");
+    }
+
+    class Program {
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="header"></param>
+        /// <returns></returns>
+        static async Task Main(FileInfo file, bool header = false) {
+            var r = File.ReadAllText(file.FullName);
             var request = XRequest(r);
+
+            var ps = new Processor(new CommandOptions {
+                ShowHeader = header
+            });
 
             var client = new HttpClient();
             if (request.Method == Method.Get) {
-                await ProcessGet(client, request);
+                await ps.ProcessGet(client, request);
             } else if (request.Method == Method.Post) {
-                await ProcessPost(client, request);
+                await ps.ProcessPost(client, request);
             }
         }
     }

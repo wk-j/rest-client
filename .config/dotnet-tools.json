@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "wk.restclient": {
+      "version": "1.0.0",
+      "commands": [
+        "wk-rest"
+      ]
+    }
+  }
+}
