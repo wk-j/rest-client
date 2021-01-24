@@ -6,6 +6,7 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>wk-rest</ToolCommandName>
     <PackageId>wk.RestClient</PackageId>
+    <NoWarn>CS1591;RCS1090;RCS1138;CA1822</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
