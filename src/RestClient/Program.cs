@@ -1,11 +1,11 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Spectre.Console;
 
 namespace RestClient {
-    class Program {
-
+    internal static class Program {
         /// <summary>
         ///
         /// </summary>
@@ -13,11 +13,10 @@ namespace RestClient {
         /// <param name="header"></param>
         /// <returns></returns>
         private static async Task Main(FileInfo file, bool header = false) {
+            var definition = File.ReadAllLines(file.FullName)
+                .Where(x => !x.TrimStart().StartsWith("//"));
 
-            // AnsiConsole.Markup("[underline red]Hello[/] World!");
-
-            var definition = File.ReadAllText(file.FullName);
-            var request = RequestParser.XRequest(definition);
+            var request = RequestParser.XRequest(string.Concat(definition));
 
             var ps = new Processor(new CommandOptions {
                 ShowHeader = header

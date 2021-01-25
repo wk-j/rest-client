@@ -48,7 +48,7 @@ namespace RestClient {
         private (bool, string) GetHeaderValue(Header[] headers, string key) {
             var h = Array.Find(headers, x => x.Key == key);
             if (h == null) {
-                return (true, "text/plain");
+                return (false, null);
             }
             return (true, h.Value);
         }
@@ -64,20 +64,21 @@ namespace RestClient {
             var headers = info.Headers;
             var body = info.Body;
 
-            var (_, contentType) = GetHeaderValue(headers, "Content-Type");
+            var (contentTypeOk, contentType) = GetHeaderValue(headers, "Content-Type");
             var (authorizationOk, authorization) = GetHeaderValue(headers, "Authorization");
 
             if (authorizationOk) {
                 var tokens = authorization.Trim().Split(' ');
                 var scheme = tokens[0].Trim();
                 var token = tokens[1].Trim();
+
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(
                     scheme,
                     token
                 );
             }
 
-            var content = new StringContent(body, Encoding.UTF8, contentType);
+            var content = new StringContent(body, Encoding.UTF8, contentTypeOk ? contentType : "text/plain");
             var response = await client.PostAsync(url, content);
             await PrintResponse(response);
         }

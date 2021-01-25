@@ -35,7 +35,7 @@ namespace RestClient {
         private static readonly Parser<string> XBody =
             Parse.AnyChar.Many().Text();
 
-        public static readonly Parser<Header> XHeader =
+        private static readonly Parser<Header> XHeader =
             from key in Parse.AnyChar
                 .Except(Parse.Char(':')
                 .Or(Parse.Char('{')))
