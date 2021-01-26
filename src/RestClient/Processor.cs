@@ -78,6 +78,14 @@ namespace RestClient {
                 );
             }
 
+            var customHeaders = headers
+                .Where(x => x.Key != "Content-Type")
+                .Where(x => x.Key != "Authorization");
+
+            foreach (var header in customHeaders) {
+                client.DefaultRequestHeaders.Add(header.Key, header.Value);
+            }
+
             var content = new StringContent(body, Encoding.UTF8, contentTypeOk ? contentType : "text/plain");
             var response = await client.PostAsync(url, content);
             await PrintResponse(response);

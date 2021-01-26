@@ -2,6 +2,7 @@
 POST https://reqres.in/api/register
 Content-Type: application/json
 Authorization: Bearer xyz
+X-Proxy-Token: e abcd
 
 {
     "email": "eve.holt@reqres.in",
