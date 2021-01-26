@@ -33,6 +33,12 @@ namespace RestClient {
                 Console.WriteLine();
             }
 
+
+            if (_options.ShowStatus) {
+                AnsiConsole.Markup($"[blue]{result.StatusCode}[/]\n");
+                Console.WriteLine();
+            }
+
             var ok = result.Content.Headers.TryGetValues("Content-Type", out var contentType);
             if (ok && contentType.Any(x => x.Contains("application/json"))) {
                 var obj = JsonSerializer.Deserialize<dynamic>(body);
@@ -53,19 +59,11 @@ namespace RestClient {
             return (true, h.Value);
         }
 
-        public async Task ProcessGet(HttpClient client, RequestInfo info) {
-            var url = info.Url;
-            var result = await client.GetAsync(url);
-            await PrintResponse(result);
-        }
-
-        public async Task ProcessPost(HttpClient client, RequestInfo info) {
-            var url = info.Url;
+        private void AppendHeader(HttpClient client, RequestInfo info) {
             var headers = info.Headers;
-            var body = info.Body;
 
-            var (contentTypeOk, contentType) = GetHeaderValue(headers, "Content-Type");
             var (authorizationOk, authorization) = GetHeaderValue(headers, "Authorization");
+            var (acceptOk, accept) = GetHeaderValue(headers, "Accept");
 
             if (authorizationOk) {
                 var tokens = authorization.Trim().Split(' ');
@@ -78,13 +76,36 @@ namespace RestClient {
                 );
             }
 
+            if (acceptOk) {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(accept));
+            }
+
             var customHeaders = headers
                 .Where(x => x.Key != "Content-Type")
+                .Where(x => x.Key != "Accept")
                 .Where(x => x.Key != "Authorization");
 
             foreach (var header in customHeaders) {
+                Console.WriteLine("Custom header {0}:{1}", header.Key, header.Value);
                 client.DefaultRequestHeaders.Add(header.Key, header.Value);
             }
+        }
+
+        public async Task ProcessGet(HttpClient client, RequestInfo info) {
+            var url = info.Url;
+            AppendHeader(client, info);
+            var result = await client.GetAsync(url);
+            await PrintResponse(result);
+        }
+
+        public async Task ProcessPost(HttpClient client, RequestInfo info) {
+            var url = info.Url;
+            var headers = info.Headers;
+            var body = info.Body;
+            AppendHeader(client, info);
+
+            var (contentTypeOk, contentType) = GetHeaderValue(headers, "Content-Type");
 
             var content = new StringContent(body, Encoding.UTF8, contentTypeOk ? contentType : "text/plain");
             var response = await client.PostAsync(url, content);

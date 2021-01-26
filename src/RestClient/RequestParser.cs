@@ -54,6 +54,9 @@ namespace RestClient {
             };
 
         public static RequestInfo XRequest(string text) {
+            var lines = text.Split('\n').Where(x => !x.TrimStart().StartsWith("//"));
+            var clean = string.Join('\n', lines);
+
             var parser =
                 from method in XMethod
                 from empty in XSpace
@@ -68,7 +71,7 @@ namespace RestClient {
                     Body = body
                 };
 
-            return parser.Parse(text);
+            return parser.Parse(clean);
         }
     }
 }

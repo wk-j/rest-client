@@ -1,6 +1,7 @@
 namespace RestClient {
     public class CommandOptions {
         public bool ShowHeader { set; get; }
+        public bool ShowStatus { set; get; }
     }
 
     public class RequestInfo {

@@ -13,4 +13,7 @@ dotnet run --project src/RestClient/RestClient.csproj \
 
 dotnet run --project src/RestClient/RestClient.csproj \
     --header --file http/register.rest
+
+dotnet run --project src/RestClient/RestClient.csproj \
+     --header --status --file http/register.rest
 ```

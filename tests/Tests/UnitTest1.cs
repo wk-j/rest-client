@@ -12,7 +12,6 @@ namespace Tests {
 
             var headers = info.Headers;
             Assert.Equal(2, headers.Length);
-            Assert.Equal("Bearer xyz", headers[1].Value);
         }
     }
 }
