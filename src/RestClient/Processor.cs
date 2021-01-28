@@ -94,7 +94,6 @@ namespace RestClient {
                 .Where(x => x.Key != "Authorization");
 
             foreach (var header in customHeaders) {
-                Console.WriteLine("Custom header {0}:{1}", header.Key, header.Value);
                 client.DefaultRequestHeaders.Add(header.Key, header.Value);
             }
         }
