@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text;
 using Spectre.Console;
+using System.Text.RegularExpressions;
 
 namespace RestClient {
     public class Processor {
@@ -13,6 +14,11 @@ namespace RestClient {
         public Processor(CommandOptions options) {
             _options = options;
         }
+
+        private string UnescapeUnicode(string input) {
+            return Regex.Unescape(input);
+        }
+
 
         private async Task PrintResponse(HttpResponseMessage result) {
             var body = await result.Content.ReadAsStringAsync();
@@ -45,7 +51,8 @@ namespace RestClient {
                 var json = JsonSerializer.Serialize(obj, new JsonSerializerOptions {
                     WriteIndented = true
                 });
-                Console.WriteLine(json);
+                var pretty = UnescapeUnicode(json);
+                Console.WriteLine(pretty);
             } else {
                 Console.WriteLine(body);
             }
