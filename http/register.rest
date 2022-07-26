@@ -8,4 +8,3 @@ X-Proxy-Token: e abcd
     "email": "eve.holt@reqres.in",
     "password": "pistol"
 }
-

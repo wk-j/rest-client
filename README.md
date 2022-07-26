@@ -12,7 +12,26 @@ dotnet tool install -g wk.RestClient
 
 ## Usage
 
-```bash
-wk-rest --file http/users.rest
-wk-rest --file http/register.rest
+```
+> wk-rest --file http/register.rest
+
+{
+  "id": 4,
+  "token": "QpwL5tke4Pnpja7X4"
+}
+```
+
+- `http/register.rest`
+
+```
+// This is comment
+POST https://reqres.in/api/register
+Content-Type: application/json
+Authorization: Bearer xyz
+X-Proxy-Token: e abcd
+
+{
+    "email": "eve.holt@reqres.in",
+    "password": "pistol"
+}
 ```
