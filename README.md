@@ -26,7 +26,7 @@ X-Proxy-Token: e abcd
     "password": "pistol"
 }
 ```
-### 2. Execute `wk-rest` cli
+#### 2. Execute `wk-rest` cli
 
 ```
 > wk-rest --file http/register.rest
