@@ -26,7 +26,10 @@ namespace RestClient {
                 ShowStatus = status
             });
 
-            var client = new HttpClient();
+            var handler = new HttpClientHandler() {
+                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            };
+            var client = new HttpClient(handler);
 
             if (request.Method == Method.Get) {
                 await ps.ProcessGet(client, request);

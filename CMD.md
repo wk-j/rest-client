@@ -19,4 +19,7 @@ dotnet run --project src/RestClient/RestClient.csproj \
 
 dotnet run --project src/RestClient/RestClient.csproj \
      --file http/register.rest
+
+dotnet run --project src/RestClient/RestClient.csproj \
+     --file /Users/wk/Project/e-saraban/http/00-172.26.3.16/full-text.rest 
 ```
