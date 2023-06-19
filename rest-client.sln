@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.001.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{87C402D1-FB24-4E6F-9F2A-1938357E9D1E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "tests\Tests\Tests.csproj", "{5CDB967B-460A-411D-AA8C-B398B150B39C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9C6FD5B4-5A8A-48DE-AD75-4624925A6BDA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestClient", "src\RestClient\RestClient.csproj", "{B6A2497E-FD6C-46B3-A544-03F025D68797}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5CDB967B-460A-411D-AA8C-B398B150B39C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CDB967B-460A-411D-AA8C-B398B150B39C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CDB967B-460A-411D-AA8C-B398B150B39C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CDB967B-460A-411D-AA8C-B398B150B39C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6A2497E-FD6C-46B3-A544-03F025D68797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6A2497E-FD6C-46B3-A544-03F025D68797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6A2497E-FD6C-46B3-A544-03F025D68797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6A2497E-FD6C-46B3-A544-03F025D68797}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5CDB967B-460A-411D-AA8C-B398B150B39C} = {87C402D1-FB24-4E6F-9F2A-1938357E9D1E}
+		{B6A2497E-FD6C-46B3-A544-03F025D68797} = {9C6FD5B4-5A8A-48DE-AD75-4624925A6BDA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A631482-2EBA-417D-90A5-6BAD277ECEA2}
+	EndGlobalSection
+EndGlobal

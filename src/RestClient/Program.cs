@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Spectre.Console;
@@ -15,6 +16,8 @@ namespace RestClient {
         /// <param name="status"></param>
         /// <returns></returns>
         private static async Task Main(FileInfo file, bool header = false, bool status = false) {
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+
             var definition = File.ReadAllText(file.FullName);
             var request = RequestParser.XRequest(definition);
 
@@ -24,6 +27,7 @@ namespace RestClient {
             });
 
             var client = new HttpClient();
+
             if (request.Method == Method.Get) {
                 await ps.ProcessGet(client, request);
             } else if (request.Method == Method.Post) {
