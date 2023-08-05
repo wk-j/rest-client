@@ -12,7 +12,7 @@ dotnet tool install -g wk.RestClient
 
 ## Usage
 
-#### 1. Create request file `http/register.rest`
+### 1. Create request file `http/regres.in/register.rest`
 
 ```
 // This is comment
@@ -26,10 +26,11 @@ X-Proxy-Token: e abcd
     "password": "pistol"
 }
 ```
-#### 2. Execute `wk-rest` cli
+
+### 2. Execute `wk-rest` in terminal
 
 ```
-> wk-rest --file http/register.rest
+> wk-rest --file http/regres.in/register.rest
 
 {
   "id": 4,
